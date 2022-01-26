@@ -142,6 +142,16 @@ exports.postOrder = (req, res, next) => {
 }
 
 exports.getOrders = (req, res, next) => {
+  /*
+    di bawah ini kenapa ada penambahan object {include: ['products'] } karena jika kita console.log(orders) data
+    order item ini tidak tampil, sedangkan data yang akan kita tampilin adalah data product yang relate dengan order
+    ini dan yang relate dengan order ini adanya di order item. jika kita cek relasi di app.js terdapat
+    relasi ini --> orderModel.belongsToMany(productsModel, { through: orderItemModel }) . jadi kita bisa menarik
+    data product dari object order tapi melewati order item. oleh karena itu kita perlu menyisip kan code ini.
+    jadi ini seperti kita menyuruh order jika ingin menrik semua data order, maka tolong untuk menarik data
+    produt yang berelasi dengan order ini.
+
+        */
   req.user
     .getOrders({ include: ['products'] })
     .then(orders => {
